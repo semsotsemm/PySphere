@@ -1,0 +1,346 @@
+/* =========================================
+   action.css - Стили для страницы акций
+   ========================================= */
+
+main {
+    padding-top: var(--header-height);
+}
+
+.container-fluid {
+    width: 100%;
+    /* Если нужно, чтобы баннер упирался в края экрана, убери padding у родителя */
+    display: flex;
+    justify-content: center;
+}
+
+/* --- БАННЕР (ПО ТВОИМ РАЗМЕРАМ) --- */
+.promo-section {
+    width: 100%;
+    /* Если баннер должен быть на всю ширину страницы: */
+    max-width: 100%;
+    margin-bottom: 60px;
+}
+
+.promo-banner {
+    width: 100%;
+    height: 500px;
+    /* Высота 500px */
+
+    /* Горизонтальный градиент */
+    background: linear-gradient(90deg, #4D1D77 0%, #6B24CE 100%);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    /* ТОЧНЫЕ ОТСТУПЫ */
+    padding-left: 348px;
+    padding-right: 304px;
+
+    box-sizing: border-box;
+    /* Чтобы padding не увеличивал ширину блока */
+    position: relative;
+    overflow: hidden;
+}
+
+.promo-banner__content {
+    flex: 1;
+    z-index: 2;
+    /* Убираем лишние отступы, так как padding задан родителю */
+}
+
+.promo-banner__title {
+    font-size: 54px;
+    color: #ffffff;
+    margin-bottom: 25px;
+}
+
+.promo-banner__desc {
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 550px;
+}
+
+.promo-banner__image-wrapper {
+    /* Картинка прижата справа padding-ом родителя */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.promo-banner__img {
+    max-height: 377px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* --- ПОИСК --- */
+.search-bar {
+    width: 100%;
+    height: 60px;
+    background-color: #1F1F1F;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    margin-bottom: 60px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.search-bar__input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    margin-left: 15px;
+    outline: none;
+}
+
+/* --- МАКЕТ КАТАЛОГА --- */
+.catalog-layout {
+    display: flex;
+    gap: 40px;
+    padding-bottom: 100px;
+}
+
+/* Сайдбар */
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+}
+
+.filter-group {
+    margin-bottom: 35px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+    padding-bottom: 20px;
+}
+
+.filter-group:last-child {
+    border-bottom: none;
+}
+
+.filter-title {
+    font-size: 14px;
+    color: #9CA3AF;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Input цены */
+.price-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.price-input {
+    width: 50%;
+    background: #111;
+    border: 1px solid #333;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Select сортировки */
+.filter-select {
+    width: 100%;
+    background: #111;
+    color: white;
+    border: 1px solid #333;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Чекбоксы (для языков) */
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.custom-checkbox input {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #555;
+    border-radius: 4px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.custom-checkbox input:checked~.checkmark {
+    background: #6B24CE;
+    border-color: #6B24CE;
+}
+
+/* Галочка внутри чекбокса */
+.custom-checkbox input:checked~.checkmark::after {
+    content: "✔";
+    font-size: 12px;
+    color: white;
+}
+
+/* Радио кнопки (для уровня) - берем из прошлого, чуть обновим */
+.custom-radio {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.custom-radio input {
+    display: none;
+}
+
+.radio-mark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #555;
+    border-radius: 50%;
+    margin-right: 10px;
+    position: relative;
+}
+
+.custom-radio input:checked~.radio-mark {
+    border-color: #6B24CE;
+}
+
+.custom-radio input:checked~.radio-mark::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 8px;
+    height: 8px;
+    background: #6B24CE;
+    border-radius: 50%;
+}
+
+/* --- СЕТКА И КАРТОЧКИ --- */
+.catalog-grid {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    /* Отступ между карточками */
+}
+
+.action-course-card__title {
+    width: 50%;
+    font-size: 20px;
+}
+
+.action-price-box__new {
+    font-size: 24px;
+}
+
+.action-course-card__icon {
+    width: 120px !important;
+    height: 120px !important;
+}
+
+.action-price-box__old {
+    font-size: 13px;
+}
+
+.action-course-card__list li {
+    font-size: 14px;
+}
+
+.action-course-card__label-text {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.action-course-card__label {
+    width: 152px !important;
+    height: 30px !important;
+}
+
+.action-course-card__label-icon {
+    width: 14px !important;
+    height: 14px !important;
+
+}
+
+/* Специфичный стиль для карточки на этой странице */
+.action-page-card {
+    /* Принудительные размеры по ТЗ */
+    width: 464px !important;
+    height: 470px !important;
+
+    /* Стили из твоего примера HTML */
+    background-color: #1F1F1F;
+    /* Фон как в примере */
+    border-radius: 10px;
+    position: relative;
+    box-sizing: border-box;
+    /* Убедимся, что display block/flex работает корректно при фильтрации */
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.course-card__icon {
+    position: absolute;
+    top: 26px;
+    right: 30px;
+    width: 100px;
+    height: auto;
+}
+
+/* Медиа-запросы для адаптива */
+@media (max-width: 1400px) {
+    .promo-banner {
+        /* Если экран меньше, чем твои огромные отступы, уменьшаем их */
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .promo-banner {
+        height: auto;
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .promo-banner__image-wrapper {
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .catalog-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .action-page-card {
+        width: 100% !important;
+        /* На мобилке на всю ширину */
+        max-width: 464px;
+        height: auto !important;
+        /* Высота авто */
+        min-height: 470px;
+        margin: 0 auto;
+    }
+}

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PySphere</title>
+    <link rel="icon" href="images/PySphereIcon.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo">PySphere</a>
+
+            <button class="header__burger" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="nav">
+                <div class="nav__list">
+                    <a href="profile.html" class="nav__link nav__link--profile">
+                        <span>Профиль</span>
+                        <i class="arrow-icon"></i>
+                    </a>
+
+                    <a href="tests.html" class="nav__link">
+                        <span>Тесты и практика</span>
+                        <i class="arrow-icon"></i>
+                    </a>
+                    <a href="roadmaps.html" class="nav__link">
+                        <span>Роудмапы</span>
+                        <i class="arrow-icon"></i>
+                    </a>
+                    <a href="action.html" class="nav__link">
+                        <span>Курсы</span>
+                        <i class="arrow-icon"></i>
+                    </a>
+                    <a href="action.html" class="nav__link">
+                        <span>Акции</span>
+                        <i class="arrow-icon"></i>
+                    </a>
+                </div>
+            </nav>
+
+            <a href="profile.html" class="profile_link">
+                <img src="images/ProfileIcon.png" alt="Профиль" class="profile_icon">
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero__container">
+                <div class="hero__content">
+                    <h1 class="hero__title">Мы — выбор <br>тысяч учеников</h1>
+                </div>
+            </div>
+        </section>
+
+        <div class="dashboard">
+            <div class="container">
+                <div class="window-controls">
+                    <div class="window-controls__dot window-controls__dot--red"></div>
+                    <div class="window-controls__dot window-controls__dot--yellow"></div>
+                    <div class="window-controls__dot window-controls__dot--green"></div>
+                </div>
+
+                <div class="dashboard__header">
+                    <div class="dashboard__info">
+                        <h2 class="dashboard__title">Python: Главный стек 2026 года</h2>
+                        <p class="dashboard__subtitle">Более 30.000 активных студентов на платформе выбрало эти курсы
+                        </p>
+
+                        <div class="discount-badge">
+                            <img src="images/strelkaverh.png" alt="Стрелка" class="discount-badge__icon">
+                            <span class="discount-badge__text">25% СКИДКА НА ПОПУЛЯРНЫЕ КУРСЫ</span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard__stats">
+                        <p class="rating-text">№1 в рейтингах Python курсов</p>
+                        <p class="growth-text">реальный рост после прохождения базы</p>
+                    </div>
+
+                    <img src="images/PySphereIcon.png" alt="Logo" class="dashboard__logo">
+                </div>
+
+                <div class="courses-grid">
+                    <div class="course-card course-card--small" data-type="course">
+                        <div class="course-card__label">
+                            <img src="images/molnia.png" alt="molnia" class="course-card__label-icon">
+                            <span class="course-card__label-text">Алгоритмы ML</span>
+                        </div>
+                        <h3 class="course-card__title">Data science на основе Python</h3>
+                        <img src="images/data.png" alt="data" class="course-card__icon">
+                        <ul class="course-card__list">
+                            <li>Анализ данных</li>
+                            <li>Доступ к базе знаний</li>
+                            <li>Работа с базами данных</li>
+                            <li>Осваивание популярных библиотек для Data science</li>
+                        </ul>
+                        <div class="course-card__desc-block">
+                            <div class="price-box">
+                                <span class="price-box__old">12.999 RUB</span>
+                                <span class="price-box__new">8.999 RUB</span>
+                            </div>
+
+                            <div class="discount-container">
+                                <img src="images/skidka.png" alt="discount" class="course-card__discount">
+                                <span class="discount-text">-50%</span>
+                            </div>
+                        </div>
+                        <div class="course-card__buttons">
+                            <button class="btn btn--secondary js-details-btn">Подробнее</button>
+                            <button class="btn btn--primary js-buy-btn">Записаться</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card course-card--large" data-type="course">
+                        <div class="course-card__label">
+                            <img src="images/molnia.png" alt="molnia" class="course-card__label-icon">
+                            <span class="course-card__label-text">Фуллстек-разработчик</span>
+                        </div>
+                        <h3 class="course-card__title">Фуллстек-разработчик на JavaScript</h3>
+                        <img src="images/js.png" alt="js" class="course-card__icon">
+                        <ul class="course-card__list">
+                            <li>TypeScript</li>
+                            <li>Веб-вёрстка</li>
+                            <li>JavaScript Базовый</li>
+                            <li>Осваивание React.js, Node.js</li>
+                        </ul>
+                        <div class="course-card__desc-block">
+                            <div class="price-box">
+                                <span class="price-box__old">12.999 RUB</span>
+                                <span class="price-box__new">8.999 RUB</span>
+                            </div>
+
+                            <div class="discount-container">
+                                <img src="images/skidka.png" alt="discount" class="course-card__discount">
+                                <span class="discount-text">-47%</span>
+                            </div>
+                        </div>
+                        <div class="course-card__buttons">
+                            <button class="btn btn--secondary js-details-btn">Подробнее</button>
+                            <button class="btn btn--primary js-buy-btn">Записаться</button>
+                        </div>
+                    </div>
+
+                    <div class="course-card course-card--small" data-type="course">
+                        <div class="course-card__label">
+                            <img src="images/molnia.png" alt="molnia" class="course-card__label-icon">
+                            <span class="course-card__label-text">Вся база Python за месяц</span>
+                        </div>
+                        <h3 class="course-card__title">Python-разработчик базовый уровень</h3>
+                        <img src="images/python.png" alt="python" class="course-card__icon">
+                        <ul class="course-card__list">
+                            <li>Доступ к базе знаний</li>
+                            <li>Изучение базовых библиотек</li>
+                            <li>Введение в программирование</li>
+                            <li class="text-small">Возможность последующего самостоятельного обучения</li>
+                        </ul>
+                        <div class="course-card__desc-block">
+                            <div class="price-box">
+                                <span class="price-box__old">12.999 RUB</span>
+                                <span class="price-box__new">8.999 RUB</span>
+                            </div>
+
+                            <div class="discount-container">
+                                <img src="images/skidka.png" alt="discount" class="course-card__discount">
+                                <span class="discount-text">-40%</span>
+                            </div>
+                        </div>
+                        <div class="course-card__buttons">
+                            <button class="btn btn--secondary js-details-btn">Подробнее</button>
+                            <button class="btn btn--primary js-buy-btn">Записаться</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <section class="start-section">
+            <div class="cards_container">
+                <h2 class="section-title">
+                    Быстрый старт в Python: <br>
+                    от фундаментальных знаний до первой работы в IT
+                </h2>
+
+                <div class="info-cards">
+                    <div class="info-card">
+                        <img src="images/icon1.png" alt="icon" class="info-card__icon">
+                        <h3 class="info-card__title">Доступ к базе знаний</h3>
+                        <p class="info-card__desc">
+                            В процессе обучения мы генерируем персонализированные конспекты по ключевым модулям для
+                            глубокой фиксации знаний. Используйте метод интервальных повторений: увеличивайте паузы
+                            между
+                            повторениями, чтобы перевести информацию в долговременную память. Данный подход гарантирует
+                            идеальное владение материалом и исключает его потерю даже после завершения курсов.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <img src="images/icon2.png" alt="icon" class="info-card__icon">
+                        <h3 class="info-card__title">Подготовка к собеседованию</h3>
+                        <p class="info-card__desc">
+                            Тестируйте свои навыки в любой момент: система генерирует имитацию собеседования на основе
+                            уже пройденных модулей. Мы используем реальную базу вопросов, которые детально разбирались в
+                            процессе обучения. Отслеживайте динамику роста компетенций в профиле — наглядная инфографика
+                            покажет вашу готовность к реальному офферу.
+                        </p>
+                    </div>
+
+                    <div class="info-card">
+                        <img src="images/icon3.png" alt="icon" class="info-card__icon">
+                        <h3 class="info-card__title">Учись и зарабатывай</h3>
+                        <p class="info-card__desc">
+                            Превратите обучение в инвестицию: зарабатывайте внутреннюю валюту за каждое успешно
+                            выполненное техническое задание. Тратьте накопленные баллы на покупку других курсов. Мы
+                            поощряем качество и дисциплину — чем серьезнее вы подходите к задачам, тем доступнее
+                            становится ваше дальнейшее развитие.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="efficiency">
+            <div class="container slider-wrapper">
+                <div class="efficiency__slider" id="effSlider">
+                    <div class="efficiency__slide">
+                        <div class="efficiency__content">
+                            <h2 class="efficiency__value">1.6x</h2>
+                            <p class="efficiency__subtitle">В 1.6 раза быстрее к первой зарплате в IT</p>
+                            <p class="efficiency__text">
+                                Мы проанализировали путь наших студентов и поняли: благодаря связке «Python + Математика
+                                + Тренажер интервью» время от старта обучения до первого оффера сокращается на 60%.
+                            </p>
+                            <span class="efficiency__footer">Эффективность нашей методики</span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div class="chart-grid">
+                                <div class="chart-grid__line"></div>
+                                <div class="chart-grid__line"></div>
+                                <div class="chart-grid__line"></div>
+
+                                <div class="chart-item chart-item--purple">
+                                    <div class="chart-item__bar"></div>
+                                    <span class="chart-item__value">1.6x</span>
+                                    <span class="chart-item__label">Прогресс с нами</span>
+                                </div>
+
+                                <div class="chart-item chart-item--white">
+                                    <div class="chart-item__bar"></div>
+                                    <span class="chart-item__label">Самообучение</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="efficiency__slide">
+                        <div class="efficiency__content">
+                            <h2 class="efficiency__value">92%</h2>
+                            <p class="efficiency__subtitle">Студентов находят работу в первый месяц</p>
+                            <p class="efficiency__text">
+                                Наши выпускники работают в крупнейших IT-компаниях: от стартапов до международных
+                                корпораций. Мы даем не только код, но и понимание бизнес-процессов, что делает вас
+                                востребованным специалистом на рынке.
+                            </p>
+                            <span class="efficiency__footer">Успех наших выпускников</span>
+                        </div>
+                        <div class="chart-wrapper">
+                            <div class="stats-box">
+                                <div class="stats-box__circle">92%</div>
+                                <p>Оффер получен</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slider-nav">
+                    <button class="slider-dot active" data-index="0"></button>
+                    <button class="slider-dot" data-index="1"></button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-intro">
+            <div class="container">
+                <h2 class="section-title section-title--centered">Мы создали идеальную среду для твоего роста в IT
+                </h2>
+                <p class="section-subtitle">Забудь про скучные лекции и устаревшие курсы.</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="cards_container">
+                <div class="feature-card">
+                    <div class="feature-card__info">
+                        <span class="feature-card__label">Универсальный стек технологий</span>
+                        <h2 class="feature-card__title">Большой выбор направлений</h2>
+                        <p class="feature-card__text">Открой для себя мир Python: Django, FastAPI, Data Science и
+                            Machine
+                            Learning. — Масштабируйся в смежные сферы: JS/Frontend, системный C++, SQL и работа с
+                            Docker. —
+                            Всё в одном месте: база данных PostgreSQL и основы DevOps для создания готовых продуктов.
+                        </p>
+                        <button class="btn-more js-feature-btn" data-id="1">Узнать больше</button>
+                    </div>
+                    <div class="feature-card__image"><img src="images/image1.png" alt="Tech"></div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card__info">
+                        <span class="feature-card__label">Поддержка в реальном времени</span>
+                        <h2 class="feature-card__title">Круглосуточная поддержка</h2>
+                        <p class="feature-card__text">Возник вопрос? Напиши преподавателю прямо в интерактивном окне на
+                            сайте и получи быстрый разбор задачи. Тебе не нужно ждать часами на форумах экспертная
+                            помощь
+                            доступна в процессе написания кода. Живое общение с профи помогает избежать ошибок и в 1.6
+                            раза
+                            ускоряет прохождение сложных тем.</p>
+                        <button class="btn-more js-feature-btn" data-id="2">Узнать больше</button>
+                    </div>
+                    <div class="feature-card__image"><img src="images/image2.png" alt="Experience"></div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card__image">
+                        <img src="images/image3.png" alt="Offer">
+                    </div>
+                    <div class="feature-card__info feature-card__info--padded">
+                        <span class="feature-card__label">Наука против забывания</span>
+                        <h2 class="feature-card__title">Когнитивная психология в коде</h2>
+                        <p class="feature-card__text">Наша методика задействует три вида памяти: визуальную (чтение),
+                            механическую (код) и вербальную (решение). Учтена «кривая забывания» Эббингауза: система
+                            напомнит о теме именно тогда, когда это нужно для закрепления. Мы строим нейронные связи, а
+                            не
+                            просто заставляем копировать код из видеоуроков.</p>
+                        <button class="btn-more js-feature-btn" data-id="3">Узнать больше</button>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-card__info">
+                        <span class="feature-card__label">Прогрессивная траектория дохода</span>
+                        <h2 class="feature-card__title">Инвестиция в твое будущее</h2>
+                        <p class="feature-card__text">Стартуй с уверенной отметки: средняя зарплата Junior-выпускника
+                            начинается от 100 000 ₽. Мы готовим тебя к росту: с каждым годом стажа твой доход будет
+                            расти
+                            экспоненциально. Владение широким стеком (Python + БД + Docker) делает тебя незаменимым и
+                            дорогим специалистом.</p>
+                        <button class="btn-more js-feature-btn" data-id="4">Узнать больше</button>
+                    </div>
+                    <div class="feature-card__image"><img src="images/image4.png" alt="Community"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="courseModal" class="modal">
+        <div class="modal__content">
+            <button class="modal__close">&times;</button>
+
+            <div id="infoView" class="modal__view">
+                <div class="modal__left">
+                    <h2 id="modalTitle" class="modal__title">Название курса</h2>
+                    <p id="modalDesc" class="modal__desc">Описание курса...</p>
+                    <div class="price-box modal__price-box">
+                        <span id="modalOldPrice" class="price-box__old"></span>
+                        <span id="modalNewPrice" class="price-box__new"></span>
+                    </div>
+                    <button class="btn btn--primary modal__action-btn">Купить сейчас</button>
+                </div>
+                <div class="modal__right">
+                    <img id="modalIcon" src="" alt="Icon" class="modal__img">
+                </div>
+            </div>
+
+            <div id="paymentView" class="modal__view" style="display: none;">
+                <div class="modal__left">
+                    <h2 class="modal__title">Оформление заказа</h2>
+                    <p id="paymentCourseName" class="modal__course-name"></p>
+                    <form class="pay-form">
+                        <input type="text" placeholder="Имя на карте" class="pay-form__input">
+                        <input type="text" placeholder="0000 0000 0000 0000" class="pay-form__input">
+                        <div class="pay-form__row">
+                            <input type="text" placeholder="ММ/ГГ" class="pay-form__input">
+                            <input type="text" placeholder="CVC" class="pay-form__input">
+                        </div>
+                        <button type="button" class="btn btn--primary pay-form__submit"
+                            style="font-size: 20px; padding: 10px;">
+                            Оплатить <span id="finalPrice"></span>
+                        </button>
+                    </form>
+                    <button class="modal__back-link">← Вернуться к описанию</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

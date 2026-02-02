@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Акции и Курсы - PySphere</title>
+    <link rel="icon" href="images/PySphereIcon.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="action.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo">PySphere</a>
+            <button class="header__burger" aria-label="Меню"><span></span><span></span><span></span></button>
+            <nav class="nav">
+                <div class="nav__list">
+                    <a href="profile.html" class="nav__link nav__link--profile"><span>Профиль</span><i
+                            class="arrow-icon"></i></a>
+                    <a href="tests.html" class="nav__link"><span>Тесты и практика</span><i class="arrow-icon"></i></a>
+                    <a href="roadmaps.html" class="nav__link"><span>Роудмапы</span><i class="arrow-icon"></i></a>
+                    <a href="course.html" class="nav__link"><span>Курсы</span><i class="arrow-icon"></i></a>
+                    <a href="action.html" class="nav__link" style="color: #fff; opacity: 1;"><span>Акции</span><i
+                            class="arrow-icon"></i></a>
+                </div>
+            </nav>
+            <a href="profile.html" class="profile_link"><img src="images/ProfileIcon.png" alt="Профиль"
+                    class="profile_icon"></a>
+        </div>
+    </header>
+
+    <main>
+        <section class="promo-section">
+            <div class="container-fluid">
+                <div class="promo-banner">
+                    <div class="promo-banner__content">
+                        <h1 class="promo-banner__title">Скидка до 60% <br>при оплате баллами</h1>
+                        <p class="promo-banner__desc">
+                            Зарабатывай баллы прямо во время обучения: выполняй задачи, пиши код и оплачивай до 60%
+                            стоимости курсов. Почувствуй себя программистом с первых дней обучения. Твой прогресс
+                            конвертируется в реальную выгоду на твоем счету!
+                        </p>
+                    </div>
+                    <div class="promo-banner__image-wrapper">
+                        <img src="images/pythonBannerIcon.png" alt="Python Glass" class="promo-banner__img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="catalog-section">
+            <div class="container">
+
+                <div class="search-bar">
+                    <svg class="search-bar__icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="#9CA3AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="searchInput" class="search-bar__input"
+                        placeholder="Поиск по названию курса, технологиям (React, Python)...">
+                </div>
+
+                <div class="catalog-layout">
+                    <aside class="sidebar">
+                        <div class="filter-group">
+                            <h3 class="filter-title">Сортировка</h3>
+                            <select id="sortSelect" class="filter-select">
+                                <option value="default">По умолчанию</option>
+                                <option value="price-asc">Сначала дешевле</option>
+                                <option value="price-desc">Сначала дороже</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">Цена (RUB)</h3>
+                            <div class="price-inputs">
+                                <input type="number" id="priceMin" placeholder="От" class="price-input">
+                                <input type="number" id="priceMax" placeholder="До" class="price-input">
+                            </div>
+                        </div>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">Язык программирования</h3>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="language" value="js">
+                                <span class="checkmark"></span>
+                                JavaScript
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="language" value="python">
+                                <span class="checkmark"></span>
+                                Python
+                            </label>
+                            <label class="custom-checkbox">
+                                <input type="checkbox" name="language" value="go">
+                                <span class="checkmark"></span>
+                                Go
+                            </label>
+                        </div>
+
+                        <div class="filter-group">
+                            <h3 class="filter-title">Уровень сложности</h3>
+                            <label class="custom-radio">
+                                <input type="radio" name="difficulty" value="all" checked>
+                                <span class="radio-mark"></span>
+                                Любой
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="difficulty" value="junior">
+                                <span class="radio-mark"></span>
+                                Для новичков
+                            </label>
+                            <label class="custom-radio">
+                                <input type="radio" name="difficulty" value="middle">
+                                <span class="radio-mark"></span>
+                                Для специалистов
+                            </label>
+                        </div>
+                    </aside>
+
+                    <div class="catalog-grid" id="coursesGrid">
+
+                        <div class="course-card action-page-card" data-lang="js" data-level="middle" data-price="8999">
+                            <div class="course-card__label">
+                                <img src="images/molnia.png" alt="icon"
+                                    class="course-card__label-icon action-course-card__label-icon">
+                                <span class="course-card__label-text action-course-card__label-text">Специалист</span>
+                            </div>
+                            <h3 class="course-card__title">Фуллстек-разработчик на JavaScript</h3>
+                            <img src="images/js.png" alt="js" class="course-card__icon action-course-card__icon"
+                                onerror="this.style.display='none'">
+                            <ul class="course-card__list action-course-card__list">
+                                <li>TypeScript, React.js</li>
+                                <li>Node.js, Express</li>
+                                <li>JavaScript Базовый</li>
+                                <li>WebSockets</li>
+                            </ul>
+                            <div class="course-card__desc-block">
+                                <div class="price-box">
+                                    <span class="price-box__old action-price-box__old">12.999 RUB</span>
+                                    <span class="price-box__new action-price-box__new">8.999 RUB</span>
+                                </div>
+                                <div class="discount-container">
+                                    <img src="images/skidka.png" alt="discount" class="course-card__discount">
+                                    <span class="discount-text">-30%</span>
+                                </div>
+                            </div>
+                            <div class="course-card__buttons">
+                                <button class="btn btn--secondary js-details-btn">Подробнее</button>
+                                <button class="btn btn--primary js-buy-btn">Записаться</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card action-page-card" data-lang="python" data-level="junior"
+                            data-price="4500">
+                            <div class="course-card__label">
+                                <img src="images/molnia.png" alt="icon"
+                                    class="course-card__label-icon action-course-card__label-icon">
+                                <span class="course-card__label-text action-course-card__label-text">Новичок</span>
+                            </div>
+                            <h3 class="course-card__title">Python-разработчик: быстрый старт</h3>
+                            <img src="images/pythonBannerIcon.png" alt="python"
+                                class="course-card__icon action-course-card__icon" style="width: 80px;"
+                                onerror="this.style.display='none'">
+                            <ul class="course-card__list action-course-card__list">
+                                <li>Синтаксис Python</li>
+                                <li>Работа с файлами</li>
+                                <li>ООП основы</li>
+                                <li>Телеграм боты</li>
+                            </ul>
+                            <div class="course-card__desc-block">
+                                <div class="price-box">
+                                    <span class="price-box__old action-price-box__old">9.000 RUB</span>
+                                    <span class="price-box__new action-price-box__new">4.500 RUB</span>
+                                </div>
+                                <div class="discount-container">
+                                    <img src="images/skidka.png" alt="discount" class="course-card__discount">
+                                    <span class="discount-text">-50%</span>
+                                </div>
+                            </div>
+                            <div class="course-card__buttons">
+                                <button class="btn btn--secondary js-details-btn">Подробнее</button>
+                                <button class="btn btn--primary js-buy-btn">Записаться</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card action-page-card" data-lang="go" data-level="middle" data-price="15000">
+                            <div class="course-card__label">
+                                <img src="images/molnia.png" alt="icon"
+                                    class="course-card__label-icon action-course-card__label-icon">
+                                <span class="course-card__label-text action-course-card__label-text">Backend Pro</span>
+                            </div>
+                            <h3 class="course-card__title">Highload на Go (Golang)</h3>
+                            <img src="images/dataBucket.png" alt="go" class="course-card__icon action-course-card__icon"
+                                style="width: 90px;" onerror="this.style.display='none'">
+                            <ul class="course-card__list action-course-card__list">
+                                <li>Микросервисы</li>
+                                <li>Docker & Kubernetes</li>
+                                <li>gRPC, Protocol Buffers</li>
+                                <li>PostgreSQL Pro</li>
+                            </ul>
+                            <div class="course-card__desc-block">
+                                <div class="price-box">
+                                    <span class="price-box__old action-price-box__old">20.000 RUB</span>
+                                    <span class="price-box__new action-price-box__new">15.000 RUB</span>
+                                </div>
+                                <div class="discount-container">
+                                    <img src="images/skidka.png" alt="discount" class="course-card__discount">
+                                    <span class="discount-text">-25%</span>
+                                </div>
+                            </div>
+                            <div class="course-card__buttons">
+                                <button class="btn btn--secondary js-details-btn">Подробнее</button>
+                                <button class="btn btn--primary js-buy-btn">Записаться</button>
+                            </div>
+                        </div>
+
+                        <div class="course-card action-page-card" data-lang="js" data-level="junior" data-price="5000">
+                            <div class="course-card__label action-course-card__label">
+                                <img src="images/molnia.png" alt="icon"
+                                    class="course-card__label-icon action-course-card__label-icon">
+                                <span class="course-card__label-text action-course-card__label-text">Frontend
+                                    Старт</span>
+                            </div>
+                            <h3 class="course-card__title action-course-card__title">Верстка сайтов HTML/CSS + JS</h3>
+                            <img src="images/js.png" alt="js" class="course-card__icon action-course-card__icon"
+                                onerror="this.style.display='none'">
+                            <ul class="course-card__list action-course-card__list">
+                                <li>Flexbox & Grid</li>
+                                <li>Адаптивная верстка</li>
+                                <li>Анимации CSS</li>
+                                <li>Основы DOM</li>
+                            </ul>
+                            <div class="course-card__desc-block">
+                                <div class="price-box">
+                                    <span class="price-box__old action-price-box__old">7.500 RUB</span>
+                                    <span class="price-box__new action-price-box__new">5.000 RUB</span>
+                                </div>
+                                <div class="discount-container">
+                                    <img src="images/skidka.png" alt="discount" class="course-card__discount">
+                                    <span class="discount-text">-33%</span>
+                                </div>
+                            </div>
+                            <div class="course-card__buttons">
+                                <button class="btn btn--secondary js-details-btn">Подробнее</button>
+                                <button class="btn btn--primary js-buy-btn">Записаться</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div id="courseModal" class="modal">
+        <div class="modal__content">
+            <button class="modal__close">&times;</button>
+
+            <div id="infoView" class="modal__view">
+                <div class="modal__left">
+                    <h2 id="modalTitle" class="modal__title">Название курса</h2>
+                    <p id="modalDesc" class="modal__desc">Описание курса...</p>
+                    <div class="price-box modal__price-box">
+                        <span id="modalOldPrice" class="price-box__old"></span>
+                        <span id="modalNewPrice" class="price-box__new"></span>
+                    </div>
+                    <button class="btn btn--primary modal__action-btn">Купить сейчас</button>
+                </div>
+                <div class="modal__right">
+                    <img id="modalIcon" src="" alt="Icon" class="modal__img">
+                </div>
+            </div>
+
+            <div id="paymentView" class="modal__view" style="display: none;">
+                <div class="modal__left">
+                    <h2 class="modal__title">Оформление заказа</h2>
+                    <p id="paymentCourseName" class="modal__course-name"></p>
+                    <form class="pay-form">
+                        <input type="text" placeholder="Имя на карте" class="pay-form__input">
+                        <input type="text" placeholder="0000 0000 0000 0000" class="pay-form__input">
+                        <div class="pay-form__row">
+                            <input type="text" placeholder="ММ/ГГ" class="pay-form__input">
+                            <input type="text" placeholder="CVC" class="pay-form__input">
+                        </div>
+                        <button type="button" class="btn btn--primary pay-form__submit"
+                            style="font-size: 20px; padding: 10px;">
+                            Оплатить <span id="finalPrice"></span>
+                        </button>
+                    </form>
+                    <button class="modal__back-link">← Вернуться к описанию</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="action.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

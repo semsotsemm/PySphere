@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PySphere Admin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #050505;
+            --panel-bg: #111111;
+            --card-bg: #151515;
+            --accent: #6251CD;
+            --text-main: #ffffff;
+            --text-gray: #9CA3AF;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- LOGIN OVERLAY --- */
+        #loginOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .login-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(98, 81, 205, 0.2);
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #000;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 6px;
+            box-sizing: border-box;
+            /* Важно для отступов */
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent);
+            border: none;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 260px;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 25px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #fff, #a8a8a8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .menu-item {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            color: var(--text-gray);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+        }
+
+        .menu-item.active {
+            border-left: 3px solid var(--accent);
+        }
+
+        /* --- MAIN CONTENT --- */
+        .main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .charts-wrapper {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            height: 350px;
+        }
+
+        /* Таблица */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            color: var(--text-gray);
+            padding: 15px 0;
+            font-weight: normal;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-sm:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-del:hover {
+            background: rgba(255, 80, 80, 0.2);
+            color: #ff5050;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2 style="margin-top: 0;">Вход в Admin</h2>
+            <input type="text" id="username" class="login-input" placeholder="Логин (admin)" value="admin">
+            <input type="password" id="password" class="login-input" placeholder="Пароль (admin123)" value="admin123">
+            <button class="login-btn" onclick="performLogin()">Войти</button>
+            <p id="loginError" style="color: #ff5050; font-size: 12px; margin-top: 10px; display: none;">Неверный логин
+                или пароль</p>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo">PySphere Admin</div>
+        <div class="menu-item active">Дашборд</div>
+        <div class="menu-item">Курсы</div>
+        <div class="menu-item">Заказы</div>
+        <div class="menu-item">Клиенты</div>
+        <div style="flex-grow: 1;"></div>
+        <div class="menu-item" onclick="logout()" style="color: #ff5050;">Выход</div>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <h1>Обзор</h1>
+            <div style="font-size: 14px; color: var(--text-gray);">Статус: <span style="color: #10B981;">● Online</span>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="card">
+                <div class="card-title">Выручка</div>
+                <div class="card-value" id="revenue">Loading...</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Пользователи</div>
+                <div class="card-value" id="users">...</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Курсов</div>
+                <div class="card-value" id="coursesCount">...</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Онлайн</div>
+                <div class="card-value" id="online">...</div>
+            </div>
+        </div>
+
+        <div class="charts-wrapper">
+            <div class="chart-card">
+                <canvas id="salesChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <canvas id="coursesPieChart"></canvas>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Активные курсы</h3>
+            <table id="coursesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Цена</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:8000";
+        let authHeader = "";
+
+        // Проверяем, есть ли сохраненный пароль при загрузке
+        window.onload = () => {
+            const savedAuth = localStorage.getItem('adminAuth');
+            if (savedAuth) {
+                authHeader = savedAuth;
+                document.getElementById('loginOverlay').classList.add('hidden');
+                initDashboard();
+            }
+        };
+
+        // Функция входа
+        async function performLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            // Создаем заголовок Basic Auth
+            const credentials = btoa(user + ":" + pass);
+            const header = "Basic " + credentials;
+
+            try {
+                // Пробуем постучаться на защищенный эндпоинт
+                const response = await fetch(`${API_URL}/admin/dashboard-data/`, {
+                    headers: { "Authorization": header }
+                });
+
+                if (response.ok) {
+                    // Успех! Сохраняем и убираем окно
+                    localStorage.setItem('adminAuth', header);
+                    authHeader = header;
+                    document.getElementById('loginOverlay').classList.add('hidden');
+                    initDashboard();
+                } else {
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            } catch (e) {
+                alert("Ошибка соединения с сервером");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('adminAuth');
+            location.reload();
+        }
+
+        // Основная функция загрузки данных
+        async function initDashboard() {
+            try {
+                // 1. Загружаем статистику
+                const resStats = await fetch(`${API_URL}/admin/dashboard-data/`, {
+                    headers: { "Authorization": authHeader }
+                });
+
+                if (resStats.status === 401) { logout(); return; } // Если пароль устарел
+
+                const data = await resStats.json();
+
+                // Заполняем цифры
+                document.getElementById('revenue').innerText = data.summary.revenue + " ₽";
+                document.getElementById('users').innerText = data.summary.users;
+                document.getElementById('coursesCount').innerText = data.summary.courses;
+                document.getElementById('online').innerText = data.summary.online;
+
+                // 2. Рисуем графики
+                renderCharts(data.chart);
+
+                // 3. Загружаем таблицу курсов (предполагаем, что этот эндпоинт открыт или требует тех же прав)
+                const resCourses = await fetch(`${API_URL}/get-all-courses/`);
+                const courses = await resCourses.json();
+
+                const tbody = document.getElementById('tableBody');
+                tbody.innerHTML = courses.map(c => `
+                    <tr>
+                        <td>#${c.id}</td>
+                        <td style="color:white; font-weight:500;">${c.title}</td>
+                        <td>${c.new_price} ₽</td>
+                        <td>
+                            <button class="btn-sm btn-del" onclick="deleteCourse(${c.id})">Удалить</button>
+                        </td>
+                    </tr>
+                `).join('');
+
+            } catch (error) {
+                console.error("Ошибка загрузки данных:", error);
+            }
+        }
+
+        function renderCharts(chartData) {
+            // Линейный график
+            new Chart(document.getElementById('salesChart'), {
+                type: 'line',
+                data: {
+                    labels: chartData.labels,
+                    datasets: [{
+                        label: 'Продажи',
+                        data: chartData.values,
+                        borderColor: '#6251CD',
+                        backgroundColor: 'rgba(98, 81, 205, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, title: { display: true, text: 'Динамика выручки (7 дней)' } },
+                    scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(255,255,255,0.05)' } } }
+                }
+            });
+
+            // Круговой график
+            new Chart(document.getElementById('coursesPieChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Python', 'JS', 'Java', 'Design'],
+                    datasets: [{
+                        data: [40, 30, 20, 10],
+                        backgroundColor: ['#6251CD', '#A897FE', '#2A2A2A', '#444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' }, title: { display: true, text: 'Популярность' } },
+                    cutout: '75%'
+                }
+            });
+        }
+
+        async function deleteCourse(id) {
+            if (confirm("Удалить курс навсегда?")) {
+                await fetch(`${API_URL}/delete-course/${id}`, { method: 'DELETE' });
+                initDashboard(); // Перезагрузить данные
+            }
+        }
+    </script>
+</body>
+
+</html>

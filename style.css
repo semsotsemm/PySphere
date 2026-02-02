@@ -1,0 +1,1786 @@
+:root {
+    --bg-color: #000000;
+    --text-main: #ffffff;
+    --text-gray: #9CA3AF;
+    --text-dark: #111111;
+
+    --accent-primary: #6251CD;
+    --accent-light: #A897FE;
+    --accent-gradient: linear-gradient(105deg, #A897FE 0%, #6251CD 100%);
+    --accent-gradient-text: linear-gradient(90deg, #A897FE 0%, #6251CD 100%);
+
+    --card-bg: #111111;
+    --inner-card-bg: #2A2A2A;
+    --font-main: 'Graphik LC Web', sans-serif;
+
+    --container-width: 1420px;
+    --header-height: 78px;
+}
+
+@font-face {
+    font-family: 'Graphik LC Web';
+    src: url('fonts/graphiklcweb_medium.ttf') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+.chart-item {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.chart-item:hover .chart-item__bar,
+.chart-item:active .chart-item__bar {
+    filter: brightness(1.3);
+    box-shadow: 0 0 20px rgba(168, 151, 254, 0.4);
+    transform: scaleY(1.2);
+}
+
+.chart-item--purple:hover .chart-item__value {
+    text-shadow: 0 0 10px rgba(168, 151, 254, 0.8);
+    transform: scale(1.1);
+    transition: all 0.3s ease;
+}
+
+.chart-item--white:hover .chart-item__bar,
+.chart-item--white:active .chart-item__bar {
+    opacity: 1;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 0 0 rgba(168, 151, 254, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(168, 151, 254, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(168, 151, 254, 0);
+    }
+}
+
+
+
+
+.stats-box__circle {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    /* Постоянная мягкая анимация */
+    animation: pulse-glow 2s infinite;
+}
+
+.stats-box__circle:hover,
+.stats-box__circle:active {
+    transform: scale(1.08);
+    border-color: var(--accent-light);
+    color: var(--accent-light);
+    /* Ускоряем и усиливаем пульсацию при наведении */
+    animation: pulse-glow 1s infinite;
+    background: rgba(168, 151, 254, 0.1);
+}
+
+/* Добавляем легкое анимированное сияние внутри круга */
+.stats-box__circle::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(168, 151, 254, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.stats-box__circle:hover::after {
+    opacity: 1;
+}
+
+/* Адаптация для мобильных: убираем ховер-эффект там, где он не нужен, 
+   оставляя только реакцию на нажатие */
+@media (hover: none) {
+
+    .chart-item:hover,
+    .stats-box__circle:hover {
+        transform: none;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--bg-color);
+    font-family: var(--font-main);
+    color: var(--text-main);
+    overflow-x: hidden;
+    /* Чтобы слайдер не ломал страницу */
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+button {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+/* Контейнер для ограничения ширины */
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+    /* Отступы по краям на мобилке */
+}
+
+.cards_container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+    /* Отступы по краям на мобилке */
+}
+
+/* =========================================
+   2. ХЕДЕР (HEADER)
+   ========================================= */
+.header {
+    background-color: rgba(0, 0, 0, 0.4);
+    height: var(--header-height);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.08), 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+}
+
+.header__container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 5.8%;
+    /* Как в макете */
+    justify-content: space-between;
+}
+
+.header__logo {
+    text-decoration: none;
+    font-size: 22px;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    z-index: 1001;
+    /* Поверх меню на мобилке */
+}
+
+/* Навигация */
+.nav {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.nav__link {
+    text-decoration: none;
+    font-size: 15px;
+    margin-left: 37px;
+    color: var(--text-main);
+    transition: opacity 0.3s;
+}
+
+.nav_link {
+    /* Ваши обычные ссылки */
+    text-decoration: none;
+    margin-left: 37px;
+}
+
+.profile_link {
+    margin-left: auto;
+    /* Прижимает иконку вправо */
+    display: flex;
+    align-items: center;
+    z-index: 1001;
+}
+
+.profile_icon {
+    width: 27px;
+    height: auto;
+    display: block;
+}
+
+.nav__link:hover {
+    opacity: 0.8;
+}
+
+.nav__profile {
+    margin-left: 37px;
+    display: flex;
+}
+
+.nav__profile-icon {
+    width: 27px;
+    height: auto;
+    margin-left: auto;
+}
+
+/* Бургер-кнопка (скрыта на десктопе) */
+.header__burger {
+    display: none;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    background: transparent;
+    z-index: 1001;
+}
+
+.header__burger span {
+    position: absolute;
+    background-color: white;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    top: 9px;
+    transition: 0.3s;
+}
+
+.header__burger span:first-child {
+    top: 0;
+}
+
+.header__burger span:last-child {
+    top: 18px;
+}
+
+/* Анимация бургера */
+.header__burger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.header__burger.active span:first-child {
+    top: 9px;
+    transform: rotate(45deg);
+}
+
+.header__burger.active span:last-child {
+    top: 9px;
+    transform: rotate(-45deg);
+}
+
+/* =========================================
+   3. ГЛАВНЫЙ БЛОК (HERO)
+   ========================================= */
+main {
+    padding-top: var(--header-height);
+}
+
+.hero {
+    margin-top: 107px;
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.hero__title {
+    font-size: 100px;
+    /* Десктоп */
+    color: white;
+    text-align: center;
+    line-height: 0.9;
+    margin: 0;
+}
+
+/* =========================================
+   4. DASHBOARD (ТЕМНЫЙ БЛОК С КУРСАМИ)
+   ========================================= */
+.dashboard {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* Переопределяем .container внутри dashboard для стилизации фона */
+.dashboard .container {
+    background-color: #19181B;
+    border-radius: 18px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0;
+    /* Внутренний паддинг зададим элементам */
+    /* Высота на десктопе фиксирована макетом, но на мобилке должна быть auto */
+    min-height: 690px;
+}
+
+/* Точки окна */
+.window-controls {
+    position: absolute;
+    top: 21px;
+    left: 36px;
+    display: flex;
+    gap: 10px;
+}
+
+.window-controls__dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+}
+
+.window-controls__dot--red {
+    background-color: #2F2C31;
+}
+
+.window-controls__dot--yellow {
+    background-color: #222124;
+}
+
+.window-controls__dot--green {
+    background-color: #222124;
+}
+
+/* Шапка дашборда */
+.dashboard__header {
+    display: flex;
+    justify-content: space-between;
+    /* Чтобы разъехались */
+    align-items: flex-start;
+    padding: 96px 37px 0 37px;
+    /* 55+41 padding top */
+    position: relative;
+}
+
+.dashboard__info {
+    max-width: 50%;
+    position: relative;
+}
+
+.dashboard__title {
+    font-size: 19px;
+    color: white;
+    margin: 0;
+    font-weight: 500;
+}
+
+.dashboard__subtitle {
+    font-size: 12px;
+    color: #9CA3AF;
+    margin-top: 5px;
+}
+
+/* Плашка скидки */
+.discount-badge {
+    position: absolute;
+    top: 60px;
+    left: -56px;
+    width: 325px;
+    height: 61px;
+    border-radius: 52px;
+    background: linear-gradient(105deg, #1E1A35 0%, #14131A 100%);
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 10;
+}
+
+.discount-badge__icon {
+    width: 27px;
+    height: 27px;
+    margin-left: 17px;
+}
+
+.discount-badge__text {
+    margin-left: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    background: var(--accent-gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.dashboard__stats {
+    text-align: right;
+    margin-right: 70px;
+    /* Место под лого */
+}
+
+.rating-text {
+    font-size: 19px;
+    margin: 0;
+}
+
+.growth-text {
+    font-size: 12px;
+    color: #6B7280;
+    margin-top: 5px;
+}
+
+.dashboard__logo {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    right: 40px;
+    top: 90px;
+    border-radius: 50%;
+}
+
+/* Сетка курсов */
+.courses-grid {
+    background-color: #19181B;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 54px;
+    padding: 0 37px 60px;
+    /* Нижний отступ */
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+    /* Чтобы на планшете переносились */
+}
+
+/* Карточка курса */
+.course-card {
+    height: 470px;
+    background-color: #1F1F1F;
+    border-radius: 10px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.course-card--small {
+    width: 386px;
+}
+
+.course-card--large {
+    width: 464px;
+}
+
+.course-card__label {
+    position: absolute;
+    top: 24px;
+    left: 23px;
+    background-color: #FFFFFF;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    padding: 6px 15px 6px 10px;
+    width: max-content;
+}
+
+.course-card__label-icon {
+    width: 12px;
+    height: 12px;
+}
+
+.course-card__label-text {
+    margin-left: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #000;
+}
+
+.course-card__title {
+    font-weight: 100;
+    position: absolute;
+    top: 73px;
+    left: 23px;
+    font-size: 20px;
+    margin: 0;
+    width: 240px;
+    line-height: 1.2;
+}
+
+.course-card__icon {
+    position: absolute;
+    top: 26px;
+    right: 15px;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Размеры иконок (по порядку) */
+.course-card:nth-child(1) .course-card__icon {
+    width: 122px;
+}
+
+.course-card:nth-child(2) .course-card__icon {
+    width: 130px;
+    right: 30px;
+}
+
+.course-card:nth-child(3) .course-card__icon {
+    width: 120px;
+}
+
+/* Список преимуществ */
+.course-card__list {
+    position: absolute;
+    top: 156px;
+    left: 23px;
+}
+
+.course-card__list li {
+    font-size: 13px;
+    color: #E5E7EB;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.course-card__list li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    background-color: #10B981;
+    border-radius: 50%;
+    margin-right: 10px;
+    box-shadow: 0 0 8px #10B981;
+}
+
+.course-card__list li.text-small {
+    font-size: 11px;
+}
+
+.discount-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 2%;
+}
+
+.course-card__desc-block {
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: absolute;
+    top: 283px;
+    left: 23px;
+    width: calc(100% - 46px);
+    height: 102px;
+    background-color: var(--inner-card-bg);
+    border-radius: 10px;
+    padding: 12px;
+    overflow: hidden;
+    /* Скрываем блик за пределами */
+}
+
+/* Описываем блик, но не запускаем анимацию сразу */
+.course-card__desc-block::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, 0.2),
+            /* Яркость блика */
+            transparent);
+    pointer-events: none;
+    /* Чтобы не мешал кликам по кнопкам */
+}
+
+/* Запуск анимации ТОЛЬКО при наведении на конкретный блок */
+.course-card__desc-block:hover::before {
+    animation: shimmer-on-hover 2.5s infinite;
+}
+
+/* Плавная анимация: пролет за 1 секунду + 1.5 секунды пауза */
+@keyframes shimmer-on-hover {
+    0% {
+        left: -150%;
+    }
+
+    40% {
+        left: 150%;
+        /* За это время (40% от 2.5с) блик пролетает */
+    }
+
+    100% {
+        left: 150%;
+        /* Остальное время он "спит", пока вы держите мышку */
+    }
+}
+
+.course-card__desc-text {
+    font-size: 13px;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.price-box {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.discount-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.discount-percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+
+.course-card__discount {
+    display: block;
+    max-width: 60px;
+    height: auto;
+}
+
+.discount-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    color: #000000;
+    font-weight: bold;
+    font-size: 13px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.price-box__old {
+    font-weight: 100px;
+    font-size: 13px;
+    color: #9E9E9E;
+    text-decoration: line-through;
+    opacity: 0.9;
+}
+
+.price-box__new {
+    margin-top: 5px;
+    font-size: 24px;
+    font-weight: 100;
+}
+
+/* Кнопки карточки */
+.course-card__buttons {
+    position: absolute;
+    bottom: 23px;
+    left: 23px;
+    right: 23px;
+    display: flex;
+    gap: 12px;
+}
+
+/* =========================================
+   5. UI KIT КНОПКИ
+   ========================================= */
+.btn {
+    height: 38px;
+    padding: 0 10px;
+    flex: 1;
+    /* Растягиваем кнопки равномерно */
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn--primary {
+    background: var(--accent-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.btn--primary:hover {
+    background: linear-gradient(270deg, #6251CD, #A897FE, #251f47);
+    background-size: 400% 400%;
+    animation: purpleGradient 2s ease infinite;
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(168, 151, 254, 0.3);
+}
+
+.btn--secondary {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+}
+
+.btn--secondary:hover {
+    animation: borderGlow 1.5s linear infinite;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+@keyframes purpleGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes borderGlow {
+
+    0%,
+    100% {
+        border-color: #ffffff;
+        box-shadow: 0 0 2px #fff;
+    }
+
+    50% {
+        border-color: #555555;
+        box-shadow: 0 0 0px #fff;
+    }
+}
+
+/* =========================================
+   6. СЕКЦИЯ "БЫСТРЫЙ СТАРТ"
+   ========================================= */
+.start-section {
+    margin-top: 120px;
+}
+
+.section-title {
+    font-weight: 100;
+    width: 70%;
+    margin: 0 auto 30px;
+    font-size: 60px;
+    text-align: center;
+    color: white;
+    line-height: 1.1;
+}
+
+.section-title--centered {
+    max-width: 1100px;
+}
+
+.info-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    /* Адаптив */
+}
+
+.info-card {
+    width: 317px;
+    height: 370px;
+    background-color: var(--card-bg);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(168, 151, 254, 0.3);
+}
+
+.info-card__icon {
+    width: 40px;
+    margin: 27px 0 0 22px;
+}
+
+.info-card__title {
+    font-size: 22px;
+    /* Оптимизировано */
+    color: white;
+    margin: 27px 0 0 30px;
+    font-weight: 500;
+}
+
+.info-card__desc {
+    font-size: 13px;
+    color: #969696;
+    line-height: 1.4;
+    margin: 15px 30px 0 30px;
+}
+
+/* =========================================
+   7. СЛАЙДЕР ЭФФЕКТИВНОСТИ
+   ========================================= */
+
+.slider-wrapper {
+    width: 100%;
+    max-width: 1011px;
+    /* Ширина как у 3 карточек */
+    margin: 0 auto;
+    overflow: hidden;
+    /* Скрываем соседний слайд */
+    padding: 20px 0;
+}
+
+.efficiency__slider {
+    display: flex;
+    width: 200%;
+    /* 2 слайда */
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.efficiency__slide {
+    width: 50%;
+    /* Каждый слайд занимает половину ширины трека (100% контейнера) */
+    flex-shrink: 0;
+    height: 400px;
+    background-color: var(--card-bg);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    display: flex;
+    padding: 60px;
+    box-sizing: border-box;
+    position: relative;
+    /* Отступ между слайдами реализуем через margin внутри элемента или padding */
+    margin-right: 0;
+}
+
+.efficiency__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.efficiency__value {
+    font-size: 80px;
+    margin: 0;
+    font-weight: bold;
+    background: var(--accent-gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+}
+
+.efficiency__subtitle {
+    color: var(--accent-light);
+    font-size: 16px;
+    margin: 10px 0 30px 0;
+}
+
+.efficiency__text {
+    width: 80%;
+    font-size: 12px;
+    color: #ffffff;
+    line-height: 1.4;
+    max-width: 440px;
+    margin: 0;
+}
+
+.efficiency__footer {
+    margin-top: auto;
+    color: #444444;
+    font-size: 14px;
+}
+
+/* Графики в слайдере */
+.chart-wrapper {
+    flex: 1;
+    background: #121212;
+    border-radius: 15px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 250px;
+}
+
+.chart-grid {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.chart-grid__line {
+    position: absolute;
+    top: -20px;
+    bottom: -20px;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.chart-grid__line:nth-child(1) {
+    left: 0%;
+}
+
+.chart-grid__line:nth-child(2) {
+    left: 33.3%;
+}
+
+.chart-grid__line:nth-child(3) {
+    left: 66.6%;
+}
+
+.chart-item {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.chart-item__bar {
+    height: 6px;
+    border-radius: 10px;
+    transition: all 0.4s ease;
+}
+
+.chart-item--purple .chart-item__bar {
+    width: 64%;
+    background: var(--accent-primary);
+    box-shadow: 0 0 15px rgba(98, 81, 205, 0.2);
+}
+
+.chart-item--white .chart-item__bar {
+    width: 40%;
+    background: #ffffff;
+    opacity: 0.5;
+}
+
+.chart-item__value {
+    position: absolute;
+    left: 66%;
+    top: -8px;
+    color: var(--accent-light);
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.chart-item__label {
+    display: block;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+/* Круг статистики (2 слайд) */
+.stats-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.stats-box__circle {
+    width: 150px;
+    height: 150px;
+    border: 4px solid rgba(168, 151, 254, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(168, 151, 254, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Навигация слайдера */
+.slider-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.slider-dot {
+    width: 35px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.slider-dot.active {
+    background: var(--accent-light);
+    width: 50px;
+    box-shadow: 0 0 15px rgba(168, 151, 254, 0.5);
+}
+
+/* =========================================
+   8. FEATURE CARDS (4 БЛОКА СНИЗУ)
+   ========================================= */
+.features-intro {
+    margin-top: 100px;
+    text-align: center;
+}
+
+.section-subtitle {
+    color: var(--text-gray);
+    margin-bottom: 30px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-top: 60px;
+}
+
+.feature-card {
+    width: 100%;
+    max-width: 1011px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    min-height: 500px;
+    background-color: var(--card-bg);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    padding: 60px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(168, 151, 254, 0.2);
+}
+
+.feature-card__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+}
+
+.feature-card__info--padded {
+    padding-left: 60px;
+    /* Для 3-й карточки */
+}
+
+.feature-card__label {
+    font-size: 14px;
+    color: var(--accent-light);
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.feature-card__title {
+    font-size: 42px;
+    margin: 0 0 30px 0;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.feature-card__text {
+    width: 80%;
+    font-size: 12px;
+    color: var(--text-gray);
+    line-height: 1.4;
+    max-width: 480px;
+    margin-bottom: 40px;
+}
+
+.feature-card__image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.feature-card__image img {
+    max-width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 30px rgba(168, 151, 254, 0.1));
+}
+
+.btn-more {
+    width: fit-content;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-more:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-light);
+}
+
+/* =========================================
+   9. МОДАЛЬНОЕ ОКНО
+   ========================================= */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(15px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* Выезжает снизу */
+
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal__content {
+    background: #121214;
+    width: 100%;
+    height: 90vh;
+    /* Почти во весь экран */
+    border-radius: 30px 30px 0 0;
+    position: relative;
+    box-sizing: border-box;
+    transform: translateY(100%);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    overflow-y: auto;
+    /* Скролл если контент не влезает */
+}
+
+.modal.active .modal__content {
+    transform: translateY(0);
+}
+
+.modal__close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+    color: white;
+    font-size: 40px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.modal__close:hover {
+    background: #FF4D4D;
+    transform: rotate(90deg);
+}
+
+.modal__view {
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #1C1C1E;
+    border-radius: 20px;
+    padding: 60px;
+    min-height: 400px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.modal__left {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.modal__title {
+    color: white;
+    font-size: 38px;
+    margin-bottom: 20px;
+    background: var(--accent-gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modal__desc {
+    font-size: 18px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+.modal__img {
+    width: 300px;
+    height: auto;
+    object-fit: contain;
+}
+
+.modal__action-btn {
+    width: 250px;
+    height: 50px;
+    margin-top: 30px;
+}
+
+/* Форма оплаты */
+.pay-form {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    max-width: 500px;
+}
+
+.pay-form__input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    min-width: 0;
+    border-radius: 10px;
+    color: white;
+    font-family: inherit;
+    outline: none;
+}
+
+.pay-form__row {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+}
+
+.pay-form__row input {
+    flex: 1;
+}
+
+.modal__back-link {
+    background: none;
+    color: var(--text-gray);
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+/* =========================================
+   10. АДАПТИВНОСТЬ (MEDIA QUERIES)
+   ========================================= */
+
+/* Tablet (Планшеты) - меньше 1200px */
+@media (max-width: 1200px) {
+    .hero__title {
+        font-size: 70px;
+    }
+
+    .dashboard .container {
+        min-height: auto;
+        height: auto;
+        padding-bottom: 40px;
+    }
+
+    .dashboard__header {
+        flex-direction: column;
+        padding-top: 70px;
+    }
+
+    .cards_container {
+        width: 90%;
+    }
+
+    .efficiency__text {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .efficiency__value {
+        margin-left: 40%;
+    }
+
+    .efficiency__subtitle {
+        text-align: center;
+    }
+
+    .efficiency__footer {
+        text-align: center;
+
+    }
+
+    .dashboard__info {
+        max-width: 100%;
+    }
+
+    .course-card__list li {
+        font-size: 14px;
+    }
+
+    .discount-badge {
+        position: relative;
+        top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .dashboard__stats {
+        text-align: left;
+        margin: 20px 0;
+    }
+
+    .dashboard__logo {
+        top: 20px;
+        right: 20px;
+    }
+
+    .courses-grid {
+        justify-content: center;
+        margin-top: 0px;
+        padding: 0;
+    }
+
+    .course-card {
+        width: 100%;
+        /* Карточки на всю ширину или половину */
+        max-width: 800px;
+    }
+
+    .efficiency__slide {
+        padding: 30px;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .chart-wrapper {
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .feature-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+        margin-top: 20px;
+    }
+
+    .feature-card__info--padded {
+        padding-left: 0;
+    }
+
+    .feature-card__image {
+        margin-top: 30px;
+    }
+
+    .container {
+        width: 86%;
+    }
+
+    .modal__left {
+        padding-right: 0;
+    }
+
+    .section-title {
+        width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .modal__action-btn {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pay-form {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .modal__right {
+        width: 40%;
+        ;
+    }
+
+    .course-card__title {
+        font-size: 26px;
+        width: 60%;
+    }
+
+    .feature-card__text {
+        margin: auto;
+    }
+
+    .modal__img {
+        margin-top: 30px;
+        width: 70%;
+    }
+
+    .btn-more {
+        margin-left: 34%;
+        margin-top: 20px;
+    }
+
+}
+
+.nav__link--profile {
+    display: none;
+    color: var(--accent-light);
+    /* Выделим его цветом в меню */
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .profile_link {
+        display: none;
+    }
+
+    .header__container {
+        padding: 0 20px;
+    }
+
+    /* Бургер меню */
+    .header__burger {
+        display: block;
+    }
+
+    .nav {
+        position: fixed;
+        top: 0;
+        /* Меню на весь экран */
+        right: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: var(--bg-color);
+        padding: 100px 20px 40px;
+        /* Отступ сверху под логотип */
+        display: flex;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .modal__view {
+        display: flex;
+        flex-direction: column-reverse;
+        padding: 30px;
+        text-align: center;
+    }
+
+    /* 1. Устанавливаем порядок блоков */
+    .modal__left {
+        display: flex;
+        flex-direction: column;
+        /* чтобы кнопка внутри тоже управлялась */
+        order: 1;
+        /* Текст будет первым */
+    }
+
+    .modal__right {
+        order: 2;
+        /* Картинка будет второй */
+        width: 100%;
+        margin: 20px 0;
+        /* отступы вокруг картинки */
+    }
+
+    .modal__action-btn {
+        order: 3;
+        /* Кнопка будет третьей (под картинкой) */
+        margin: 0 auto 0;
+        /* центрируем и даем отступ сверху */
+        width: 100%;
+        /* на мобилке лучше на всю ширину */
+        font-size: 24px;
+        padding: 10px;
+        margin-top: 10px;
+        max-width: 300px;
+    }
+
+    .modal__img {
+        margin: 0 auto;
+        max-width: 150px;
+    }
+
+    .nav.active {
+        transform: translateX(0);
+    }
+
+    .nav__list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        /* Расстояние между кнопками */
+        width: 100%;
+    }
+
+    .nav__link {
+        margin-left: 0 !important;
+        /* Убираем десктопный отступ */
+        background: #111111;
+        /* Цвет как у карточек */
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 20px 24px;
+        border-radius: 16px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.2s ease;
+    }
+
+    .nav__link:active {
+        transform: scale(0.98);
+        background: #1a1a1a;
+        border-color: var(--accent-primary);
+    }
+
+    .nav__link--profile {
+        display: flex !important;
+        background: linear-gradient(105deg, rgba(168, 151, 254, 0.1) 0%, rgba(98, 81, 205, 0.1) 100%);
+        border: 1px solid rgba(168, 151, 254, 0.2);
+        margin-bottom: 20px;
+    }
+
+    .nav__link--profile span {
+        background: var(--accent-gradient-text);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 600;
+    }
+
+    /* Иконка стрелочки справа */
+    .arrow-icon {
+        width: 10px;
+        height: 10px;
+        border-top: 2px solid var(--text-gray);
+        border-right: 2px solid var(--text-gray);
+        transform: rotate(45deg);
+    }
+
+    .nav__link--profile .arrow-icon {
+        border-color: var(--accent-light);
+    }
+
+    .nav__profile {
+        margin: 20px 0;
+    }
+
+    /* Hero */
+    .hero__title {
+        font-size: 32px;
+    }
+
+    /* Скрытие декор элементов на мобилке */
+    .dashboard__logo,
+    .window-controls {
+        display: none;
+    }
+
+    .dashboard__header {
+        padding: 40px 20px 0;
+    }
+
+    .discount-badge {
+        width: 280px;
+        left: -50px
+    }
+
+    .discount-badge__text {
+        font-size: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .section-title {
+        font-size: 22px;
+    }
+
+    .section-title--centered {
+        font-size: 26px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .course-card {
+        height: auto;
+        padding-bottom: 30px;
+    }
+
+    .course-card__desc-block {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        margin-top: 250px;
+    }
+
+    .course-card__buttons {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 20px;
+    }
+
+    .course-card__list {
+        top: 140px;
+    }
+
+    /* Чуть двигаем список */
+
+    .efficiency__value {
+        font-size: 50px;
+    }
+
+    .feature-card__title {
+        font-size: 28px;
+    }
+
+    .modal__content {
+        padding: 20px;
+    }
+
+    .modal__title {
+        font-size: 28px;
+    }
+
+    .course-card__icon {
+        position: absolute;
+        top: 26px;
+        right: 0px;
+        height: auto;
+        object-fit: contain;
+    }
+
+    /* Размеры иконок (по порядку) */
+    .course-card:nth-child(1) .course-card__icon {
+        top: 10px;
+        width: 100px;
+    }
+
+    .course-card:nth-child(2) .course-card__icon {
+        width: 100px;
+        right: 5px;
+    }
+
+    .course-card:nth-child(3) .course-card__icon {
+        width: 90px;
+        right: 5px;
+    }
+
+    .modal__desc {
+        font-size: 14px;
+    }
+
+    .modal__close {
+        width: 40px;
+        height: 40px;
+        font-size: 30px;
+        top: 15px;
+        right: 15px;
+    }
+
+    .rating-text {
+        font-size: 15px;
+        margin: 0;
+    }
+
+    .dashboard__title {
+        font-size: 17px;
+    }
+
+    .course-card__label-text {
+        margin-left: 0px;
+        font-size: 11px;
+        font-weight: 400;
+        color: #000;
+    }
+
+    .course-card__title {
+        font-size: 20px;
+        width: 220px;
+    }
+
+    .start-section {
+        margin-top: 50px;
+    }
+
+    .section-subtitle {
+        margin-bottom: 0px;
+        font-size: 12px;
+    }
+
+    .features {
+        margin-top: 20px;
+    }
+
+    .container {
+        width: 86%;
+    }
+
+
+    .efficiency__value {
+        margin-left: 36%;
+    }
+
+    .cards_container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .info-card {
+        width: 90%;
+    }
+
+    .pay-form {
+        width: 80%;
+        max-width: 100%;
+        padding: 0 10px;
+        margin: 20px auto;
+    }
+
+    .price-box {
+        margin-top: 0px;
+    }
+
+    .btn-more {
+        margin-left: 30%;
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "lessons":[
+        {
+            "title": "Знакомство с интерфейсом",
+            "content": "<h3>Приветствие</h3><p>Посмотрите обзорное видео:</p><iframe src='https://youtube.com/...'></iframe><p>А вот гифка процесса:</p><img src='https://твой-сайт.ру/media/lesson1/step1.gif' />"
+        },
+        {
+            "title": "Знакомство с интерфейсом",
+            "content": "<h3>Приветствие</h3><p>Посмотрите обзорное видео:</p><iframe src='https://youtube.com/...'></iframe><p>А вот гифка процесса:</p><img src='https://твой-сайт.ру/media/lesson1/step1.gif' />"
+        }
+    ]
+}
